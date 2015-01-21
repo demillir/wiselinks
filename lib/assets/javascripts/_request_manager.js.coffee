@@ -18,12 +18,13 @@ class RequestManager
 
     # Perform XHtmlHttpRequest
     #
+    headers =
+      'X-Wiselinks':         state.data.render
+      'X-Wiselinks-Referer': state.data.referer
+    headers = {} if !state.data.target?   # Do full refresh if no target (e.g. back-button clicked)
     $.ajax(
       url: state.url
-      headers:
-        'X-Wiselinks': state.data.render
-        'X-Wiselinks-Referer': state.data.referer
-
+      headers: headers
       dataType: "html"
     ).done(
       (data, status, xhr) ->
